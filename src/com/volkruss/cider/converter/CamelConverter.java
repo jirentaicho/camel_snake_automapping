@@ -10,18 +10,15 @@ public final class CamelConverter {
 	 * @return
 	 */
 	public final String getCamel(final String name) {
-		// _のインデックスを取得する
 		int index = name.indexOf('_');
 		
 		if(index == -1) {
 			return name;
 		}
-		//　その後ろの文字を大文字にする
 		String newName = 
 				name.substring(0,index) 
 				+ name.substring(index + 1,index + 2).toUpperCase() 
 				+ name.substring(index + 2);
-		// _を除去して返す
 		return getCamel(newName);
 	}
 
