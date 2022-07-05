@@ -1,24 +1,21 @@
 package com.volkruss.cider;
 
-import com.volkruss.cider.converter.Converter;
+import com.volkruss.cider.model.ItemDto;
+import com.volkruss.cider.model.ItemEntity;
 
 public class Main {
 
-	public Main() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public static void main(String[] args) {
+		
+		ItemEntity entity = new ItemEntity();
+		entity.item_id = 1;
+		entity.item_name = "ProductA";
+		
 		Cider cider = new Cider();
-		//String name = cider.getSnake("sampleTextStr");
-		Converter converter = new Converter();
+		ItemDto dto = cider.toCamelModel(entity, ItemDto.class);
 		
-		String name = converter.toCamel("sample_text_str");
-		String ba = converter.toSnake("sampleTextStr");
-		
-		System.out.println(name);
-		System.out.println(ba);
-		
+		System.out.println(String.valueOf(dto.itemId) + ":" + dto.itemName);
+		// 1:ProductA
 	}
 
 }

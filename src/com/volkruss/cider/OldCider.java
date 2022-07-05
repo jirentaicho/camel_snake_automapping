@@ -9,26 +9,58 @@ import java.util.function.UnaryOperator;
 
 import com.volkruss.cider.converter.Converter;
 
-public class Cider {
+@Deprecated
+public class OldCider {
 	
 	private final Converter converter;
 
-	public Cider() {
+	public OldCider() {
 		this.converter = new Converter();
 	}
 	
-	public <T> T toSnakeModel(Object source, Class<T> clazz, String ...exclusions) {
+	
+	public <T> T toSnakeModel2(Object source, Class<T> clazz, String ...exclusions) {
 		return this.getModelWithConvertLogic(clazz, source, this.converter::toSnake, exclusions);
 	}
 	
-	public <T> T toCamelModel(Object source, Class<T> clazz, String ...exclusions) {
+	public <T> T toCamelModel2(Object source, Class<T> clazz, String ...exclusions) {
 		return this.getModelWithConvertLogic(clazz, source, this.converter::toCamel, exclusions);
 	}
 	
-	public <T> T toModel(Object source,Class<T> clazz, String ...exclusions) {
-		return this.getModelWithConvertLogic(clazz, source, i -> i, exclusions);
+	
+	
+	
+	/**
+	 * 
+	 * キャメルケースで宣言されているモデルからスネークケースのモデルを取得します
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param to
+	 * @param from
+	 * @return
+	 */
+	public <T,U> T toSnakeModel(Class<T> to, U from, String ...exclusions) {
+		return this.getModelWithConvertLogic(to, from, this.converter::toSnake, exclusions);
 	}
 	
+	/**
+	 * 
+	 * スネークケースで宣言されているモデルからキャメルケースのモデルを取得します
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param to
+	 * @param from
+	 * @return
+	 */
+	public <T,U> T toCamelModel(Class<T> to, U from, String ...exclusions) {
+		return this.getModelWithConvertLogic(to, from, this.converter::toCamel, exclusions);
+	}
+	
+	public <T,U> T toModel(Class<T> to, U from, String ...exclusions) {
+		return this.getModelWithConvertLogic(to, from, i -> i, exclusions);
+	}
 	
 	private <T,U> T getModelWithConvertLogic(Class<T> to ,U from, UnaryOperator<String> func,String ...exclusions) {
 		T ins = null;
@@ -68,5 +100,5 @@ public class Cider {
 		}
 		return true;
 	}
-
+	
 }
